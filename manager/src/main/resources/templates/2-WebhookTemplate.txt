@@ -1,4 +1,5 @@
 {
+  <#if (monitorId??)>"monitorId": ${monitorId},</#if>
   "alarmId": ${alarmId},
   "target": "${target}",
   <#if (thresholdId??)>"thresholdId": ${thresholdId},</#if>
