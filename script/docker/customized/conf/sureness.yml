@@ -1,0 +1,109 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+## -- sureness.yml文本数据源 -- ##
+
+# 加载到匹配字典的资源,也就是需要被保护的,设置了所支持角色访问的资源
+# 没有配置的资源也默认被认证保护,但不鉴权
+# eg: /api/v1/source1===get===[admin] 表示 /api/v2/host===post 这条资源支持 admin 这一种角色访问
+# eg: /api/v1/source2===get===[] 表示 /api/v1/source2===get 这条资源不支持任何角色访问
+resourceRole:
+  - /api/account/auth/refresh===post===[admin,user,guest]
+  - /api/apps/**===get===[admin,user,guest]
+  - /api/monitor/**===get===[admin,user,guest]
+  - /api/monitor/**===post===[admin,user]
+  - /api/monitor/**===put===[admin,user]
+  - /api/monitor/**===delete==[admin]
+  - /api/monitors/**===get===[admin,user,guest]
+  - /api/monitors/**===post===[admin,user]
+  - /api/monitors/**===put===[admin,user]
+  - /api/monitors/**===delete===[admin]
+  - /api/alert/**===get===[admin,user,guest]
+  - /api/alert/**===post===[admin,user]
+  - /api/alert/**===put===[admin,user]
+  - /api/alert/**===delete===[admin]
+  - /api/alerts/**===get===[admin,user,guest]
+  - /api/alerts/**===post===[admin,user]
+  - /api/alerts/**===put===[admin,user]
+  - /api/alerts/**===delete===[admin]
+  - /api/notice/**===get===[admin,user,guest]
+  - /api/notice/**===post===[admin,user]
+  - /api/notice/**===put===[admin,user]
+  - /api/notice/**===delete===[admin]
+  - /api/tag/**===get===[admin,user,guest]
+  - /api/tag/**===post===[admin,user]
+  - /api/tag/**===put===[admin,user]
+  - /api/tag/**===delete===[admin]
+  - /api/summary/**===get===[admin,user,guest]
+  - /api/summary/**===post===[admin,user]
+  - /api/summary/**===put===[admin,user]
+  - /api/summary/**===delete===[admin]
+
+# 需要被过滤保护的资源,不认证鉴权直接访问
+# /api/v1/source3===get 表示 /api/v1/source3===get 可以被任何人访问 无需登录认证鉴权
+excludedResource:
+  - /api/account/auth/**===*
+  - /api/i18n/**===get
+  - /api/metrics===get
+  - /api/apps/hierarchy===get
+  - /actuator/**===get
+  # web ui 前端静态资源
+  - /===get
+  - /dashboard/**===get
+  - /monitors/**===get
+  - /alert/**===get
+  - /account/**===get
+  - /setting/**===get
+  - /passport/**===get
+  - /**/*.html===get
+  - /**/*.js===get
+  - /**/*.css===get
+  - /**/*.ico===get
+  - /**/*.ttf===get
+  - /**/*.png===get
+  - /**/*.gif===get
+  - /**/*.jpg===get
+  - /**/*.svg===get
+  - /**/*.json===get
+  - /**/*.woff===get
+  - /**/*.eot===get
+  # swagger ui 资源
+  - /swagger-resources/**===get
+  - /v2/api-docs===get
+  - /v3/api-docs===get
+  # h2 database
+  - /h2-console/**===*
+
+# 用户账户信息
+# 下面有 admin tom lili 三个账户
+# role => [admin] OR [user] OR [guest]
+# credential => MD5(password+salt)
+# 注意 Digest认证不支持加盐加密的密码账户
+# 加盐加密的密码，通过 MD5(password+salt)计算
+account:
+  - appId: admin
+    credential: 97A9A8C0F0E35A0F3491ABA5B5DACFEF
+    salt: ea38b1ab86f14d4b8470b2e6c86a0858
+    role: [admin]
+  - appId: tom
+    # 此账户的原始密码为 hertzbeat
+    credential: 8FA3B0F9E66E7D71FEE75662872F825F
+    salt: 26a29a68aef44b0e9e4f6ff08bb2af82
+    role: [user]
+  - appId: guest
+    # 此账户的原始密码为 hertzbeat
+    credential: 59A0491FF3725620244BD376AFC9E5B2
+    salt: 000d131b34324a349964b6a6fa5527a5
+    role: [guest]

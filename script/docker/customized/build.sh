@@ -20,12 +20,13 @@ cd `dirname $0`
 # 当前脚本目录
 CURRENT_DIR=`pwd`
 
-cd ../../../collector/target
 # 编译上下文目录
 CONTEXT_DIR=`pwd`
+cp ../../../collector/target/hertzbeat-collector.jar ./hertzbeat-collector.jar
+cp ../../../manager/target/hertzbeat.jar ./hertzbeat.jar
 
-echo "docker build -t tancloud/hertzbeat:v1.3.1-customized -f $CURRENT_DIR/Custom.Dockerfile $CONTEXT_DIR"
+echo "docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR"
 
-docker build -t tancloud/hertzbeat:v1.3.1-customized -f $CURRENT_DIR/Custom.Dockerfile $CONTEXT_DIR
+docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR
 
 read -p "press -> end"
