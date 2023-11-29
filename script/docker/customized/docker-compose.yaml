@@ -36,18 +36,18 @@ services:
     networks:
       - hertzbeat
 
-  iotdb:
-    image: apache/iotdb:0.13.3-node
-    container_name: hertzbeat-iotdb
-    hostname: iotdb
+  tdengine:
+    image: tdengine/tdengine:2.4.0.12
+    container_name: compose-tdengine
+    hostname: tdengine
     restart: always
     environment:
       TZ: Asia/Shanghai
     ports:
-      - "8181"
-      - "6667"
+      - "6030-6049"
+      - "6030-6049/udp"
     volumes:
-      - ./dbdata/iotdbdata:/iotdb/data
+      - ./dbdata/taosdata:/var/lib/taos/
     networks:
       - hertzbeat
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, Optional } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { I18NService, StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenService, SocialService } from '@delon/auth';
@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../../service/local-storage.service';
 export class UserLoginComponent implements OnDestroy {
   constructor(
     fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
     private socialService: SocialService,
@@ -140,6 +141,35 @@ export class UserLoginComponent implements OnDestroy {
       });
   }
   // #endregion
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe(paramMap => {
+      let redirectStr = paramMap.get('redirect');
+      let tokenStr = paramMap.get('token');
+      let refreshTokenStr = paramMap.get('refreshToken');
+      let userNameStr = paramMap.get('userName');
+      let roleStr = paramMap.get('role');
+      if (redirectStr != null &&
+        tokenStr != null &&
+        refreshTokenStr != null &&
+        userNameStr != null &&
+        roleStr != null) {
+        // 清空路由复用信息
+        this.reuseTabService.clear();
+        // 设置用户Token信息
+        this.storageSvc.storageAuthorizationToken(tokenStr);
+        this.storageSvc.storageRefreshToken(refreshTokenStr);
+        let user: User = {
+          name: userNameStr,
+          avatar: './assets/img/avatar.svg',
+          email: 'administrator',
+          role: roleStr
+        };
+        this.settingsService.setUser(user);
+        this.router.navigateByUrl(redirectStr);
+      }
+    });
+  }
 
   ngOnDestroy(): void {
     if (this.interval$) {
