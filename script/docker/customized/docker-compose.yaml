@@ -36,20 +36,35 @@ services:
     networks:
       - hertzbeat
 
-  tdengine:
-    image: tdengine/tdengine:2.4.0.12
-    container_name: compose-tdengine
-    hostname: tdengine
+  iotdb:
+    image: apache/iotdb:0.13.3-node
+    container_name: hertzbeat-iotdb
+    hostname: iotdb
     restart: always
     environment:
       TZ: Asia/Shanghai
     ports:
-      - "6030-6049"
-      - "6030-6049/udp"
+      - "8181"
+      - "6667"
     volumes:
-      - ./dbdata/taosdata:/var/lib/taos/
+      - ./dbdata/iotdbdata:/iotdb/data
     networks:
       - hertzbeat
+
+#  tdengine:
+#    image: tdengine/tdengine:2.4.0.12
+#    container_name: hertzbeat-tdengine
+#    hostname: tdengine
+#    restart: always
+#    environment:
+#      TZ: Asia/Shanghai
+#    ports:
+#      - "6030-6049"
+#      - "6030-6049/udp"
+#    volumes:
+#      - ./dbdata/taosdata:/var/lib/taos/
+#    networks:
+#      - hertzbeat
 
   hertzbeat:
     image: hertzbeat:customized
@@ -62,6 +77,7 @@ services:
     depends_on:
       - mysql
       - iotdb
+#      - tdengine
     volumes:
       - ./conf/application.yml:/opt/hertzbeat/config/application.yml
       - ./conf/sureness.yml:/opt/hertzbeat/config/sureness.yml

@@ -102,8 +102,21 @@ warehouse:
     jpa:
       enabled: false
       expire-time: 1h
-    td-engine:
+    iot-db:
       enabled: true
+      host: iotdb
+      rpc-port: 6667
+      username: root
+      password: root
+      # org.dromara.hertzbeat.warehouse.config.IotDbVersion: V_0_13 || V_1_0
+      # 如果你使用docker-compose-1.0.yaml, 不要忘记修i该version为V_1_0
+      version: V_0_13
+      query-timeout-in-ms: -1
+      # 数据存储时间：默认'7776000000'（90天,单位为毫秒,-1代表永不过期）
+      # data expire time, unit:ms, default '7776000000'(90 days, -1:never expire)
+      expire-time: '7776000000'
+    td-engine:
+      enabled: false
       driver-class-name: com.taosdata.jdbc.rs.RestfulDriver
       url: jdbc:TAOS-RS://tdengine:6041/hertzbeat
       username: root

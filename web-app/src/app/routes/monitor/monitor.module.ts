@@ -19,6 +19,7 @@ import { MonitorEditComponent } from './monitor-edit/monitor-edit.component';
 import { MonitorListComponent } from './monitor-list/monitor-list.component';
 import { MonitorNewComponent } from './monitor-new/monitor-new.component';
 import { MonitorRoutingModule } from './monitor-routing.module';
+import { MonitorDetailComponentIframe } from "./monitor-detail/monitor-detail.component.iframe";
 
 const COMPONENTS: Array<Type<void>> = [
   MonitorNewComponent,
@@ -26,7 +27,8 @@ const COMPONENTS: Array<Type<void>> = [
   MonitorListComponent,
   MonitorDetailComponent,
   MonitorDataTableComponent,
-  MonitorDataChartComponent
+  MonitorDataChartComponent,
+  MonitorDetailComponentIframe
 ];
 
 @NgModule({

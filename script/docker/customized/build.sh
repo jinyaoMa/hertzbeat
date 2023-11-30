@@ -24,9 +24,12 @@ CURRENT_DIR=`pwd`
 CONTEXT_DIR=`pwd`
 cp ../../../collector/target/hertzbeat-collector.jar ./hertzbeat-collector.jar
 cp ../../../manager/target/hertzbeat.jar ./hertzbeat.jar
+cp -r ../../../web-app/dist/ ./
 
 echo "docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR"
 
 docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR
+
+docker save -o hertzbeat_customized.tar hertzbeat:customized
 
 read -p "press -> end"

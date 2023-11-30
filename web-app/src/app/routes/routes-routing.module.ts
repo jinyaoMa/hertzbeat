@@ -12,6 +12,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
+// iframe usage
+import { MonitorDetailComponentIframe } from "./monitor/monitor-detail/monitor-detail.component.iframe";
 
 const routes: Routes = [
   {
@@ -43,6 +45,11 @@ const routes: Routes = [
       { path: 'login', component: UserLoginComponent, data: { titleI18n: 'app.login.login' } },
       { path: 'lock', component: UserLockComponent, data: { titleI18n: 'app.lock' } }
     ]
+  },
+  {
+    path: 'iframe/monitors/:monitorId',
+    component: MonitorDetailComponentIframe,
+    data: { titleI18n: 'monitors.detail' }
   },
   { path: '**', redirectTo: 'exception/404' }
 ];

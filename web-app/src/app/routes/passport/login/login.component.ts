@@ -163,7 +163,7 @@ export class UserLoginComponent implements OnDestroy {
           name: userNameStr,
           avatar: './assets/img/avatar.svg',
           email: 'administrator',
-          role: roleStr
+          role: `["${roleStr}"]`
         };
         this.settingsService.setUser(user);
         this.router.navigateByUrl(redirectStr);
