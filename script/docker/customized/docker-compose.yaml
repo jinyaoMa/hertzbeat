@@ -81,6 +81,7 @@ services:
     volumes:
       - ./conf/application.yml:/opt/hertzbeat/config/application.yml
       - ./conf/sureness.yml:/opt/hertzbeat/config/sureness.yml
+      - ./conf/define/:/opt/hertzbeat/define/
     ports:
       - "1157:1157"
       - "1158"

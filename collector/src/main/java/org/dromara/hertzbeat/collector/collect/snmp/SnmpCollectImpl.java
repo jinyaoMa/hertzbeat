@@ -41,6 +41,8 @@ import org.snmp4j.security.SecurityModel;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -271,12 +273,17 @@ public class SnmpCollectImpl extends AbstractCollect {
         String hexString = binding.toValueString();
         if (hexString.contains(HEX_SPLIT)) {
             try {
-                StringBuilder output = new StringBuilder();
                 String[] hexArr = hexString.split(HEX_SPLIT);
-                for (String hex : hexArr) {
-                    output.append((char) Integer.parseInt(hex, 16));
+                StringBuilder output = new StringBuilder();
+                byte[] outputBytes = new byte[hexArr.length];
+                for (int i = 0; i < hexArr.length; i++) {
+                    int hex = Integer.parseInt(hexArr[i], 16);
+                    output.append((char) hex);
+                    outputBytes[i] = (byte) hex;
                 }
-                return output.toString();
+                String temp = new String(outputBytes, Charset.forName("GB18030"));
+                return temp;
+                //return output.toString();
             } catch (Exception e) {
                 return hexString;
             }

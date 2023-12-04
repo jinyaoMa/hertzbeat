@@ -22,8 +22,9 @@ CURRENT_DIR=`pwd`
 
 # 编译上下文目录
 CONTEXT_DIR=`pwd`
-cp ../../../collector/target/hertzbeat-collector.jar ./hertzbeat-collector.jar
+cp ../../../collector/target/hertzbeat-collector.jar ./hertzbeat-collector-1.0.jar
 cp ../../../manager/target/hertzbeat.jar ./hertzbeat.jar
+cp -r ../../../manager/src/main/resources/define/ ./conf/define
 cp -r ../../../web-app/dist/ ./
 
 echo "docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR"
