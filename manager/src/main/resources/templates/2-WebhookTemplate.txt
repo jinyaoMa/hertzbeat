@@ -11,7 +11,7 @@
   <#if (lastTriggerTime??)>"lastTriggerTime": "${lastTriggerTime}",</#if>
   "tags": {
     <#list tags as key,value>
-      "${key}": "${value}",
+      <#if (key??)>"${key}": "<#if (value??)>${value}</#if>",</#if>
     </#list>  
   }
 }
