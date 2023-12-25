@@ -32,7 +32,7 @@ cp ../../../manager/target/hertzbeat.jar ./hertzbeat.jar
 cp -r ../../../manager/src/main/resources/define/ ./conf/define
 cp -r ../../../web-app/dist/ ./
 
-sed -i '1a\<style type="text/css">global-footer{height:0!important;display:none!important}layout-default-header .alain-default__nav li.ng-star-inserted:nth-child(2),layout-default-header .alain-default__nav li.ng-star-inserted:nth-child(3),layout-default-header .alain-default__nav header-user,layout-basic .alain-default__aside .alain-default__aside-user{display:none!important}.slide.slick-slide nz-tag.ant-tag{font-size:1.2em;line-height:1.3;padding:0.1em 0.5em}</style>' dist/index.html
+sed -i '1a\<style type="text/css">global-footer{height:0!important;display:none!important}layout-default-header .alain-default__nav li.ng-star-inserted:nth-child(2),layout-default-header .alain-default__nav li.ng-star-inserted:nth-child(3),layout-default-header .alain-default__nav header-user,layout-default-header .alain-default__header-logo,layout-basic .alain-default__aside .alain-default__aside-user{display:none!important}.slide.slick-slide nz-tag.ant-tag{font-size:1.2em;line-height:1.3;padding:0.1em 0.5em}</style>' dist/index.html
 
 echo "docker build -t hertzbeat:customized -f $CURRENT_DIR/Dockerfile $CONTEXT_DIR"
 
